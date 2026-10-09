@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Values List & More</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="theme.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <button id="menu-toggle" class="menu-toggle" type="button" aria-label="Toggle menu">
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <div class="brand-container">
+          <div class="brand">Values List & More</div>
+        </div>
+
+        <nav id="mobile-menu" class="mobile-menu">
+          <div class="mobile-menu-header">Menu</div>
+          <div class="tabs" role="tablist" aria-label="Tabs">
+            <button class="tab active" data-tab="list" type="button"><i class="fas fa-list"></i> Value List</button>
+            <button class="tab" data-tab="calc" type="button"><i class="fas fa-calculator"></i> Calculator</button>
+          </div>
+          <div style="border-top: 1px solid var(--border);"></div>
+          <button id="theme-toggle-mobile" class="ghost-btn theme-toggle" type="button" aria-label="Toggle dark/light mode"><i class="fas fa-moon"></i> Theme</button>
+          <a href="https://discord.gg/z8ATYpqGSv" class="ghost-btn discord-btn" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-discord"></i> Discord</a>
+          <a id="admin-toggle" class="ghost-btn" href="admin.html"><i class="fas fa-lock"></i> Admin</a>
+        </nav>
+
+        <div class="top-actions">
+          <div class="tabs" role="tablist" aria-label="Tabs">
+            <button class="tab active" data-tab="list" type="button">Value List</button>
+            <button class="tab" data-tab="calc" type="button">Calculator</button>
+          </div>
+          <button id="theme-toggle-desktop" class="ghost-btn theme-toggle" type="button" aria-label="Toggle dark/light mode">🌙</button>
+          <a href="https://discord.gg/z8ATYpqGSv" class="ghost-btn discord-btn" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-discord"></i>Discord</a>
+          <a id="admin-toggle" class="ghost-btn" href="admin.html">Admin</a>
+        </div>
+      </header>
+
+      <section id="tab-list" class="tab-panel active">
+        <div class="panel">
+          <div class="section-title-row">
+            <h2>Items</h2>
+            <span id="item-count-badge" class="badge">0 Items</span>
+          </div>
+          <div class="search-row">
+            <input id="item-search" type="search" placeholder="Search items..." aria-label="Search items" />
+            <select id="sort-select" class="sort-select" aria-label="Sort items">
+              <option value="value-desc">Highest Value</option>
+              <option value="value-asc">Lowest Value</option>
+              <option value="name-asc">A - Z</option>
+              <option value="name-desc">Z - A</option>
+              <option value="demand-low">Demand: Low First</option>
+              <option value="demand-high">Demand: High First</option>
+              <option value="exist-desc">Exist: Most First</option>
+              <option value="exist-asc">Exist: Least First</option>
+            </select>
+          </div>
+          <div id="value-grid" class="value-grid"></div>
+          <p id="no-results" class="no-results hidden">No items match your search.</p>
+        </div>
+      </section>
+
+      <section id="tab-calc" class="tab-panel">
+        <div class="panel calculator-panel">
+          <div class="section-title-row">
+            <h2>Trade Calculator</h2>
+            <button id="reset-btn" class="reset-btn" type="button">Reset</button>
+          </div>
+
+          <div class="trade-layout">
+            <div class="trade-side">
+              <div class="trade-side-header">
+                <h3>My Items</h3>
+                <span id="offer-count" class="badge">0</span>
+              </div>
+              <div id="offer-list" class="trade-grid">
+                <button class="add-tile" type="button" data-side="offer">
+                  <span class="add-tile-icon">+</span>
+                  <span>Add Items</span>
+                </button>
+              </div>
+              <div class="trade-total">Total: <strong id="offer-total">0</strong></div>
+            </div>
+
+            <div class="trade-side">
+              <div class="trade-side-header">
+                <h3>Other Player</h3>
+                <span id="counter-count" class="badge">0</span>
+              </div>
+              <div id="counter-list" class="trade-grid">
+                <button class="add-tile" type="button" data-side="counter">
+                  <span class="add-tile-icon">+</span>
+                  <span>Add Items</span>
+                </button>
+              </div>
+              <div class="trade-total">Total: <strong id="counter-total">0</strong></div>
+            </div>
+          </div>
+
+          <div class="result-box">
+            <strong id="trade-result">Choose some items first.</strong>
+          </div>
+        </div>
+      </section>
+
+      <div id="item-picker-modal" class="modal-overlay hidden">
+        <div class="modal">
+          <div class="modal-header">
+            <h3 id="picker-title">Add Item</h3>
+            <button id="picker-close" class="ghost-btn" type="button">✕</button>
+          </div>
+          <input id="picker-search" type="search" placeholder="Search items..." aria-label="Search items to add" />
+          <div id="picker-grid" class="picker-grid"></div>
+          <p id="picker-no-results" class="no-results hidden">No items match your search.</p>
+        </div>
+      </div>
+
+      <div id="item-detail-modal" class="modal-overlay hidden">
+        <div class="modal detail-modal">
+          <div class="modal-header">
+            <h3 id="detail-title">Item Details</h3>
+            <button id="detail-close" class="ghost-btn" type="button">✕</button>
+          </div>
+          <div class="detail-content">
+            <div class="detail-image">
+              <img id="detail-image" src="" alt="" class="detail-img" />
+            </div>
+            <div class="detail-info">
+              <div class="detail-value">Current Value: <span id="detail-current-value">0</span></div>
+              <div class="detail-demand">Demand: <span id="detail-demand">-</span></div>
+              <div class="detail-exist">Exist Count: <span id="detail-exist">N/A</span></div>
+              <div class="chart-filters">
+                <button class="filter-btn active" data-filter="1D">1D</button>
+                <button class="filter-btn" data-filter="1W">1W</button>
+                <button class="filter-btn" data-filter="1M">1M</button>
+                <button class="filter-btn" data-filter="3M">3M</button>
+                <button class="filter-btn" data-filter="1Y">1Y</button>
+                <button class="filter-btn" data-filter="ALL">ALL</button>
+              </div>
+              <canvas id="detail-chart" class="detail-chart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

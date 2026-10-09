@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1200">
+    <title>Admin - Values List & More</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="theme.js"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <div class="brand">Values List & More</div>
+          <p class="subtitle">Admin-Area</p>
+        </div>
+
+        <div class="top-actions">
+          <button id="theme-toggle-admin" class="ghost-btn theme-toggle" type="button" aria-label="Toggle dark/light mode">🌙</button>
+          <a class="ghost-btn" href="index.html">&larr; Back to the List</a>
+        </div>
+      </header>
+
+      <section id="admin-login-panel" class="panel admin-login-panel">
+        <div class="section-title-row">
+          <h2>Admin Login</h2>
+        </div>
+
+        <form id="admin-login-form" class="admin-login">
+          <input id="admin-password" type="password" placeholder="Admin password" required autofocus />
+          <button id="admin-login" type="submit">Login</button>
+        </form>
+        <p id="admin-login-error" class="admin-login-error"></p>
+      </section>
+
+      <section id="admin-panel" class="panel admin-panel hidden">
+        <div class="section-title-row">
+          <h2>Admin</h2>
+          <button id="admin-logout" class="ghost-btn" type="button">Logout</button>
+        </div>
+
+        <div id="admin-content">
+          <form id="admin-form" class="admin-form">
+            <label>
+              Item Name
+              <input id="admin-name" type="text" required placeholder="Example sword" />
+            </label>
+            <label>
+              Value
+              <input id="admin-value" type="number" min="0" step="0.1" required placeholder="12.5" />
+            </label>
+            <label>
+              Exist Count
+              <input id="admin-exist-count" type="number" min="0" step="1" placeholder="0" />
+            </label>
+            <label>
+              Demand
+              <select id="admin-demand">
+                <option value="Lack of Circulation">Lack of Circulation</option>
+                <option value="Very Low">Very Low</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+                <option value="Very High">Very High</option>
+              </select>
+            </label>
+            <label>
+              Rarity
+              <select id="admin-rarity">
+                <option value="Common" selected>Common</option>
+                <option value="Rare">Rare</option>
+                <option value="Very Rare">Very Rare</option>
+                <option value="Extinct">Extinct</option>
+              </select>
+            </label>
+            <label>
+              Pentagon Color
+              <select id="admin-pentagon-rarity">
+                <option value="Ultimate" selected>Ultimate</option>
+                <option value="Mythical">Mythical</option>
+                <option value="Legendary">Legendary</option>
+                <option value="Rare">Rare</option>
+                <option value="Common">Common</option>
+                <option value="Unique">Unique</option>
+              </select>
+            </label>
+            <label>
+              Bild-URL (Wiki-Link)
+              <input id="admin-image-url" type="url" placeholder="https://static.wikia.nocookie.net/..." />
+            </label>
+            <div class="admin-form-actions">
+              <button id="admin-form-submit" type="submit">Save Item</button>
+              <button id="admin-form-cancel" class="ghost-btn hidden" type="button">Cancel</button>
+            </div>
+          </form>
+
+          <div class="admin-upload">
+            <label>
+              Bulk-Upload (CSV oder JSON)
+              <input id="admin-upload-file" type="file" accept=".csv,.json,application/json,text/csv" />
+            </label>
+            <button id="admin-upload-btn" type="button">Upload File</button>
+            <p id="admin-upload-status" class="upload-status"></p>
+            <p class="upload-hint">CSV: Headline <code>name,value,imageUrl,demand,existCount,rarity,pentagonRarity</code>, after that one Line per Item. JSON: Array aus <code>{"name": "...", "value": 1.0, "imageUrl": "...", "demand": "High", "existCount": 0, "rarity": "Rare", "pentagonRarity": "Legendary"}</code>.</p>
+          </div>
+
+          <div class="admin-list-wrap">
+            <div class="search-row">
+              <input id="admin-item-search" type="search" placeholder="Items durchsuchen..." aria-label="Admin-Items durchsuchen" />
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Item</th>
+                  <th>Value</th>
+                  <th>Exist Count</th>
+                  <th>Demand</th>
+                  <th>Rarity</th>
+                  <th>Pentagon Color</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="admin-item-list"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script src="admin.js"></script>
+  </body>
+</html>
